@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.spm.plugin
+Bundle-SymbolicName: org.spm.plugin;singleton:=true
+Bundle-Version: 1.0.0.0
+Automatic-Module-Name: org.spm.plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.adempiere.base;bundle-version="8.2.0",
+ org.adempiere.plugin.utils;bundle-version="8.2.0"
+Export-Package: org.spm.plugin
+Bundle-Activator: org.adempiere.plugin.utils.AdempiereActivator
+Service-Component: OSGI-INF/*.xml
+Bundle-ActivationPolicy: lazy
