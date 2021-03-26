@@ -30,6 +30,7 @@ import org.compiere.util.CLogger;
 import org.compiere.util.DB;
 import org.compiere.util.Env;
 import org.compiere.util.Evaluatee;
+import org.jfree.util.Log;
 
 /**
  *  Model Tab Value Object
@@ -154,6 +155,7 @@ public class GridTabVO implements Evaluatee, Serializable
 			vo.DisplayLogic = rs.getString("DisplayLogic");
 			if (userDef != null && userDef.getDisplayLogic() != null)
 				vo.DisplayLogic = userDef.getDisplayLogic();
+			
 			
 			//	Access Level
 			vo.AccessLevel = rs.getString("AccessLevel");
@@ -300,6 +302,24 @@ public class GridTabVO implements Evaluatee, Serializable
 			catch (Exception e)
 			{
 			}
+			
+			/**  GeoRon for Rules engine */
+			try
+			{
+
+				if ( rs.getString("isUsingRules").equals("Y"))
+				{
+					CLogger.get().config("isUsingRules=Y");
+					vo.IsUsingRules = true;
+					vo.RulesFactoryClass = rs.getString("rulesFactoryClass");
+				}
+			}
+			catch (Exception e)
+			{
+				Log.error("GridTabVO -> loadTabDetails - RuylesEngine extension- Error on getting isUsingRules");
+			}
+			/**  end of - GeoRon for Rules engine */
+
 		}
 		catch (SQLException ex)
 		{
@@ -545,6 +565,12 @@ public class GridTabVO implements Evaluatee, Serializable
 	public  boolean     onlyCurrentRows = true;
 	/**	Only Current Days - derived	*/
 	public int			onlyCurrentDays = 0;
+	
+	/** GeoRon / Rules engine new field  IsUsingRules  */
+	public boolean IsUsingRules = false;
+
+	/** GeoRon / Rules engine new field  RulesFactoryClass  */
+	public String RulesFactoryClass  = "";
 
 	/** Fields contain MFieldVO entities    */
 	private ArrayList<GridFieldVO>	Fields = null;

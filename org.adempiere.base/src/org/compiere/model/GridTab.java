@@ -56,6 +56,20 @@ import org.compiere.util.Msg;
 import org.compiere.util.Util;
 import org.compiere.util.ValueNamePair;
 
+/** GeoRon - noew imports */
+import com.bedezi.idempiere.easyrules.DefaultRulesFactory;
+import com.bedezi.idempiere.easyrules.IRulesFactory;
+
+//import com.bedezi.idempiere.easyrules.HelloWorldRule;
+import org.jeasy.rules.api.Rule;
+
+import org.jeasy.rules.core.RuleBuilder;
+import org.jeasy.rules.api.Fact;
+import org.jeasy.rules.api.Facts;
+import org.jeasy.rules.api.Rules;
+import org.jeasy.rules.api.RulesEngine;
+import org.jeasy.rules.core.DefaultRulesEngine;
+
 /**
  *	Tab Model.
  *  - a combination of AD_Tab (the display attributes) and AD_Table information.
@@ -315,6 +329,33 @@ public class GridTab implements DataStatusListener, Evaluatee, Serializable
 			return false;
 		}
 
+		/** GeoRon - added logic to hook in Rules */
+		try {
+			if( m_vo.IsUsingRules ) {
+				// get a rules engine  
+				RulesEngine dfaultRulesEngine = DefaultRulesFactory.rulesFactoryInstance(null).rulesEngine(null);
+			       // create facts
+		        Facts facts = new Facts();
+		        facts.put( GridTabVO.class.getName(), (GridTabVO)m_vo );
+		        // create rules
+		        Rules rules = new Rules();
+		        Rule rule = DefaultRulesFactory
+		        		.rulesFactoryInstance(IRulesFactory.DEFAULT_RULEsENGINE_NAME)
+		        		.buildRule(IRulesFactory.FIELD_DISPLAY_RULE, m_vo.ctx, facts);
+		        		//new SpmDisplayRule(m_vo.ctx, facts);
+		        rules.register(rule);
+		
+		        //fire rules on known facts
+		        log.info("Starting RulesEngine");
+		        dfaultRulesEngine.fire(rules, facts);
+		        log.info("Completed RulesEngine");
+			}
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+		/** end of - GeoRon - added logic to hook in Rules */
+		
 		//  Order By
 		m_mTable.setOrderClause(getOrderByClause(m_vo.onlyCurrentRows));
 
