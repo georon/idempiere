@@ -340,7 +340,7 @@ public class GridTab implements DataStatusListener, Evaluatee, Serializable
 		        // create rules
 		        Rules rules = new Rules();
 		        Rule rule = DefaultRulesFactory
-		        		.rulesFactoryInstance(IRulesFactory.DEFAULT_RULEsENGINE_NAME)
+		        		.rulesFactoryInstance("xyz")
 		        		.buildRule(IRulesFactory.FIELD_DISPLAY_RULE, m_vo.ctx, facts);
 		        		//new SpmDisplayRule(m_vo.ctx, facts);
 		        rules.register(rule);

@@ -11,6 +11,7 @@ public interface IRulesFactory {
 	public static final String DEFAULT_RULEsENGINE_NAME = "DEFAULT_RULEsENGINE_NAME";
 	public static final String FIELD_DISPLAY_RULE = "FIELD_DISPLAY_RULE";
 	public static final String FIELD_ENABLED_RULE = "FIELD_ENABLED_RULE";
+	public static final String SPM_RULEsENGINE_NAME = "DEFAULT_RULEsENGINE_NAME";
 	
 	public RulesEngine rulesEngine(String clazz);
 	public RuleBuilder rulesBuilder(String clazz);

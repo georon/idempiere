@@ -1,28 +1,46 @@
 package com.bedezi.idempiere.easyrules;
 
+import java.util.List;
 import java.util.Properties;
 
+import org.adempiere.base.DefaultProcessFactory;
+import org.adempiere.base.IProcessFactory;
+//import org.adempiere.base.IServiceReferenceHolder;
+//import org.adempiere.base.Service;
 import org.jeasy.rules.api.Facts;
 import org.jeasy.rules.api.Rule;
 import org.jeasy.rules.api.RulesEngine;
 import org.jeasy.rules.core.RuleBuilder;
 import org.osgi.framework.BundleActivator;
-import org.jeasy.rules.core.RuleBuilder;
+//import org.jeasy.rules.core.RuleBuilder;
 import org.jeasy.rules.core.DefaultRulesEngine;
+import org.adempiere.base.equinox.EquinoxExtensionLocator;
+import org.adempiere.base.equinox.EquinoxExtensionHolder;
 
 public class DefaultRulesFactory implements IRulesFactory{
 	
 	private RulesEngine DEFAULT_RULESENGINE ;
 	
 	static private final IRulesFactory DEFAULT_RULES_FACTORY = new DefaultRulesFactory();
+	static private IRulesFactory rulesFactoryService;
 	
 
-	private DefaultRulesFactory() {
+	public DefaultRulesFactory() {
 		DEFAULT_RULESENGINE = new DefaultRulesEngine();
 	}
 	
 
 	public static IRulesFactory rulesFactoryInstance(String clazz) {
+		if(rulesFactoryService == null) {
+			rulesFactoryService = getRulesFactory();
+		}
+		
+		if(rulesFactoryService != null  ) {
+			System.out.println(">>> Returning RulesFactory for: " + clazz);
+			return rulesFactoryService;
+		}
+		
+		System.out.println(">>> Returning the DEFAULT_RULES_FACTORY RulesFactory" );
 		return DEFAULT_RULES_FACTORY;
 	}
 
@@ -40,29 +58,39 @@ public class DefaultRulesFactory implements IRulesFactory{
 	
 	public Rule buildRule(String ruleType, Properties ctx, Facts facts) throws RuleClassNorFoundException  {
 		
-		switch ( ruleType ){
-		case IRulesFactory.FIELD_DISPLAY_RULE : 
-			//return new com.spm.rules.SpmDisplayRule(ctx, facts); <- remove SPM package dependency
-			try {
-				return (Rule) Class.forName("com.spm.rules.SpmDisplayRule" ).getDeclaredConstructor(Properties.class,Facts.class).newInstance(ctx, facts);
-			}catch(Exception ex) {
-				ex.printStackTrace();
-				throw new RuleClassNorFoundException("DefaultRulesFactory: " + ex.getMessage());
-			}
-			//return new com.spm.rules.SpmDisplayRule(ctx, facts);
-		case IRulesFactory.FIELD_ENABLED_RULE :
-			//return new com.spm.rules.SpmEnableRule(ctx, facts); <- remove SPM package dependency
-			try {
-				return (Rule) Class.forName("com.spm.rules.SpmEnableRule").getDeclaredConstructor(Properties.class,Facts.class).newInstance(ctx, facts);
-			}catch(Exception ex) {
-				ex.printStackTrace();
-				throw new RuleClassNorFoundException("DefaultRulesFactory: " + ex.getMessage());
-			}
-		default:
-				throw new RuleClassNorFoundException("DefaultRulesFactory: Unkown ruleType");
-		}
-			
+				throw new RuleClassNorFoundException("Not supposed to be here: Unkown ruleType");
+	}
+	
+	/**
+	 * This method load the process factories waiting until the DefaultProcessFactory on base is loaded (IDEMPIERE-3829)
+	 * @return List of factories implementing IProcessFactory
+	 */
+	private static IRulesFactory getRulesFactory() {
+		EquinoxExtensionHolder<IRulesFactory> rulesFactoryHolder = null;
+		int maxIterations = 5;
+		int waitMillis = 1000;
+		int iterations = 0;
+		boolean found = false;
+		while (true) {
+			rulesFactoryHolder = EquinoxExtensionLocator.instance().locate(IRulesFactory.class, "com.bedezi.idempiere.easyrules.IRulesFactory" );
+					//Service.locator().list(IRulesFactory.class).getServiceReferences();
+			if (rulesFactoryHolder != null && rulesFactoryHolder.getExtension() instanceof IRulesFactory) {
 
+						found = true;
+						System.out.println(">>> Found the RulesFactory: " + rulesFactoryHolder.getExtension().getClass().getName());
+						return rulesFactoryHolder.getExtension();
+				
+			}
+			iterations++;
+			if (found || iterations >= maxIterations) {
+				break;
+			}
+			try {
+				Thread.sleep(waitMillis);
+			} catch (InterruptedException e) {
+			}
+		}
+		return null;
 	}
 
 }
