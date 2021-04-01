@@ -150,4 +150,10 @@
             priority="0">
       </exporter>
    </extension>
+   <extension
+         point="com.bedezi.idempiere.easyrules.IRulesFactory">
+      <Generic>
+            class="com.bedezi.easyrules.DefaultRulesFactory"
+      </Generic>
+   </extension>
 </plugin>

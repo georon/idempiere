@@ -20,7 +20,7 @@ Export-Package: bsh,
  bsh.servlet,
  bsh.util,
  com.akunagroup.uk.postcode,
- com.bedezi.idempiere.easyrules,
+ com.bedezi.easyrules,
  it.sauronsoftware.cron4j,
  org.adempiere.apps.graph,
  org.adempiere.base,
@@ -107,7 +107,8 @@ Import-Package: com.google.zxing,
 Eclipse-BuddyPolicy: registered
 Eclipse-ExtensibleAPI: true
 Bundle-Activator: org.adempiere.base.BaseActivator
-Service-Component: OSGI-INF/*.xml
+Service-Component: OSGI-INF/*.xml,
+ OSGI-INF/DefaultRulesFactory.xml
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.equinox.app;bundle-version="0.0.0",
  org.passay;bundle-version="0.0.0",

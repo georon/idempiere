@@ -1,4 +1,4 @@
-package com.bedezi.idempiere.easyrules;
+package com.bedezi.easyrules;
 
 import org.compiere.util.CLogger;
 import org.jeasy.rules.api.Facts;
@@ -7,10 +7,10 @@ import org.jeasy.rules.api.RulesEngine;
 import org.jeasy.rules.core.DefaultRulesEngine;
 import org.compiere.util.CLogger;
 
-public class Launcher {
+public class Test {
 	
 	/**	Logger			*/
-	protected static CLogger	log = CLogger.getCLogger(Launcher.class);
+	protected static CLogger	log = CLogger.getCLogger(Test.class);
 	
     public static void main(String... args) {
     	
@@ -19,7 +19,7 @@ public class Launcher {
 
         // create rules
         Rules rules = new Rules();
-        rules.register(new HelloWorldRule());
+        rules.register(new TestRule());
 
         // create a rules engine and fire rules on known facts
         RulesEngine rulesEngine = new DefaultRulesEngine();

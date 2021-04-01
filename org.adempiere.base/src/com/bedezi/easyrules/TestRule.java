@@ -1,4 +1,4 @@
-package com.bedezi.idempiere.easyrules;
+package com.bedezi.easyrules;
 
 import java.util.Map;
 import java.util.Properties;
@@ -10,7 +10,7 @@ import org.jeasy.rules.annotation.Rule;
 import org.jeasy.rules.api.Facts;
 
 @Rule(name = "Hello World rule", description = "Always say hello world")
-public class HelloWorldRule {
+public class TestRule {
 	
 	/**	Logger			*/
 	protected CLogger	log = CLogger.getCLogger(getClass());
@@ -21,11 +21,11 @@ public class HelloWorldRule {
 	private Facts facts;
 	
 	
-	public HelloWorldRule() {
+	public TestRule() {
 		
 	}
 	
-    public HelloWorldRule(Properties ctx, Map<String,Object> state, Map<String,Object> sharedState, Facts facts) {
+    public TestRule(Properties ctx, Map<String,Object> state, Map<String,Object> sharedState, Facts facts) {
 		super();
 		this.ctx = ctx;
 		this.state = state;

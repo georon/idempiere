@@ -1,4 +1,4 @@
-package com.bedezi.idempiere.easyrules;
+package com.bedezi.easyrules;
 
 public class RuleEngineException extends ClassNotFoundException{
 

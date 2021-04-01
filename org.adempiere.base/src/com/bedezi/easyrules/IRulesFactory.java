@@ -1,4 +1,4 @@
-package com.bedezi.idempiere.easyrules;
+package com.bedezi.easyrules;
 
 import java.util.Properties;
 import org.jeasy.rules.api.RulesEngine;
@@ -12,8 +12,9 @@ public interface IRulesFactory {
 	public static final String FIELD_DISPLAY_RULE = "FIELD_DISPLAY_RULE";
 	public static final String FIELD_ENABLED_RULE = "FIELD_ENABLED_RULE";
 	public static final String SPM_RULEsENGINE_NAME = "DEFAULT_RULEsENGINE_NAME";
+	public static final String IRulesFactory_CLASS_NAME = "com.bedezi.idempiere.easyrules.IRulesFactory";
 	
-	public RulesEngine rulesEngine(String clazz);
+	public RulesEngine rulesEngine();
 	public RuleBuilder rulesBuilder(String clazz);
 	//public IRulesFactory rulesFactoryInstance(String clazz); 
 	public Rule buildRule(String clazz, Properties ctx, Facts facts) throws RuleClassNorFoundException;

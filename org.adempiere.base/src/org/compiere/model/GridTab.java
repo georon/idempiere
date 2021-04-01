@@ -55,15 +55,15 @@ import org.compiere.util.Evaluator;
 import org.compiere.util.Msg;
 import org.compiere.util.Util;
 import org.compiere.util.ValueNamePair;
-
-/** GeoRon - noew imports */
-import com.bedezi.idempiere.easyrules.DefaultRulesFactory;
-import com.bedezi.idempiere.easyrules.IRulesFactory;
-
 //import com.bedezi.idempiere.easyrules.HelloWorldRule;
 import org.jeasy.rules.api.Rule;
 
 import org.jeasy.rules.core.RuleBuilder;
+
+import com.bedezi.easyrules.AbstractRulesFactory;
+import com.bedezi.easyrules.IRulesFactory;
+import com.bedezi.easyrules.ServiceLocator;
+
 import org.jeasy.rules.api.Fact;
 import org.jeasy.rules.api.Facts;
 import org.jeasy.rules.api.Rules;
@@ -333,21 +333,20 @@ public class GridTab implements DataStatusListener, Evaluatee, Serializable
 		try {
 			if( m_vo.IsUsingRules ) {
 				// get a rules engine  
-				RulesEngine dfaultRulesEngine = DefaultRulesFactory.rulesFactoryInstance(null).rulesEngine(null);
+				IRulesFactory rulesEngineFactory = ServiceLocator.rulesFactoryInstance();
 			       // create facts
 		        Facts facts = new Facts();
 		        facts.put( GridTabVO.class.getName(), (GridTabVO)m_vo );
 		        // create rules
 		        Rules rules = new Rules();
-		        Rule rule = DefaultRulesFactory
-		        		.rulesFactoryInstance("xyz")
+		        Rule rule = rulesEngineFactory
 		        		.buildRule(IRulesFactory.FIELD_DISPLAY_RULE, m_vo.ctx, facts);
 		        		//new SpmDisplayRule(m_vo.ctx, facts);
 		        rules.register(rule);
 		
 		        //fire rules on known facts
 		        log.info("Starting RulesEngine");
-		        dfaultRulesEngine.fire(rules, facts);
+		        rulesEngineFactory.rulesEngine().fire(rules, facts);
 		        log.info("Completed RulesEngine");
 			}
 		}catch(Exception ex) {
