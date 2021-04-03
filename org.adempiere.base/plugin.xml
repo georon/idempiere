@@ -150,10 +150,14 @@
             priority="0">
       </exporter>
    </extension>
-   <extension
+      <extension
+         id="com.bedezi.idempiere.easyrules.IRulesFactory"
+         name="com.bedezi.idempiere.easyrules.IRulesFactory"
          point="com.bedezi.idempiere.easyrules.IRulesFactory">
-      <Generic>
+      <rulesfactory
             class="com.bedezi.easyrules.DefaultRulesFactory"
-      </Generic>
+            tabName="dummy_tab"
+            priority="0">
+      </rulesfactory>
    </extension>
 </plugin>

@@ -6,12 +6,16 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" path="src/"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="lib/bsh.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-validator.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/cron4j.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/avalon-framework-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-api.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib.ext/easy-rules-core-4.1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib.ext/easy-rules-core-4.1.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/ron/dev/projects/idemworks/idempiere/org.adempiere.base/lib.ext/easy-rules-core-4.1.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

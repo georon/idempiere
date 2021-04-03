@@ -1,10 +1,14 @@
 package com.bedezi.easyrules;
 
+//import java.util.Set;
+//import java.util.TreeSet;
+
 import org.adempiere.base.equinox.EquinoxExtensionHolder;
 import org.adempiere.base.equinox.EquinoxExtensionLocator;
 
 public class ServiceLocator {
 
+	//highest priority Rules Factory instance
 	private static IRulesFactory rulesFactoryService;
 	
 	public static IRulesFactory rulesFactoryInstance() throws RuleEngineException{
@@ -48,5 +52,7 @@ public class ServiceLocator {
 		}
 		return null;
 	}
+	
+
 
 }

@@ -337,13 +337,14 @@ public class GridTab implements DataStatusListener, Evaluatee, Serializable
 			       // create facts
 		        Facts facts = new Facts();
 		        facts.put( GridTabVO.class.getName(), (GridTabVO)m_vo );
-		        // create rules
-		        Rules rules = new Rules();
-		        Rule rule = rulesEngineFactory
+		        // create field display rule
+		        
+		        Rule rule1 = rulesEngineFactory
 		        		.buildRule(IRulesFactory.FIELD_DISPLAY_RULE, m_vo.ctx, facts);
-		        		//new SpmDisplayRule(m_vo.ctx, facts);
-		        rules.register(rule);
-		
+		        // create field read-only rule
+		        Rule rule2 = rulesEngineFactory
+		        		.buildRule(IRulesFactory.FIELD_ENABLED_RULE, m_vo.ctx, facts);
+		        Rules rules = new Rules(rule1,rule2);
 		        //fire rules on known facts
 		        log.info("Starting RulesEngine");
 		        rulesEngineFactory.rulesEngine().fire(rules, facts);

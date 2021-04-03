@@ -18,8 +18,8 @@ public class DefaultRulesFactory extends AbstractRulesFactory{
 	
 
 	
-	public Rule buildRule(String ruleType, Properties ctx, Facts facts) throws RuleClassNorFoundException  {
-		
+	public Rule buildRule(String ruleType, Properties ctx, Facts facts) throws RuleClassNotFoundException  {
+		System.out.println(">>> DefaultRuleFactory: building dummy rule");
 		return this.rulesBuilder("")
 		.name("Dummy Rule")
 		.when( Condition.FALSE)

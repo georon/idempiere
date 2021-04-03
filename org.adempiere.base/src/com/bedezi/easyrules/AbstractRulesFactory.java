@@ -33,13 +33,15 @@ public abstract class AbstractRulesFactory implements IRulesFactory{
 		return DEFAULT_RULESENGINE;
 	}
 
+
+
 	@Override
 	public RuleBuilder rulesBuilder(String clazz) {
 		// TODO Auto-generated method stub
 		return new RuleBuilder();
 	}
 	
-	public abstract Rule buildRule(String ruleType, Properties ctx, Facts facts) throws RuleClassNorFoundException; 
+	public abstract Rule buildRule(String ruleType, Properties ctx, Facts facts) throws RuleClassNotFoundException; 
 	
 
 }
